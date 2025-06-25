@@ -10,56 +10,56 @@ interface Item {
   icon: string;
   color: string;
   time: string;
+  status?: React.ReactNode;
 }
 
 let notifications = [
   {
-    name: "Payment received",
-    description: "Magic UI",
-    time: "15m ago",
-
-    icon: "💸",
-    color: "#00C9A7",
-  },
-  {
-    name: "User signed up",
-    description: "Magic UI",
-    time: "10m ago",
-    icon: "👤",
-    color: "#FFB800",
-  },
-  {
-    name: "New message",
-    description: "Magic UI",
-    time: "5m ago",
-    icon: "💬",
-    color: "#FF3D71",
-  },
-  {
-    name: "New event",
-    description: "Magic UI",
-    time: "2m ago",
-    icon: "🗞️",
+    name: "Will Contract",
+    description: "Active & Secure",
+    time: "✓ Active",
+    icon: "SC",
     color: "#1E86FF",
+    status: <span className='text-green-400 text-xs'>Verified</span>,
+  },
+  {
+    name: "Asset Distribution",
+    description: "Automated",
+    time: "Ready",
+    icon: "AS",
+    color: "#df500f",
+    status: <span className='text-blue-400 text-xs'>Pending</span>,
+  },
+  {
+    name: "Beneficiary Added",
+    description: "New beneficiary assigned",
+    time: "2m ago",
+    icon: "BA",
+    color: "#22c55e",
+    status: <span className='text-green-400 text-xs'>New</span>,
+  },
+  {
+    name: "Audit Passed",
+    description: "Security audit successful",
+    time: "3h ago",
+    icon: "🛡️",
+    color: "#2563eb",
+    status: <span className='text-green-400 text-xs'>Passed</span>,
   },
 ];
 
 notifications = Array.from({ length: 10 }, () => notifications).flat();
 
-export const Notification = ({ name, description, icon, color, time }: Item) => {
+const Notification = ({ name, description, icon, color, time, status }: Item) => {
   return (
     <figure
       className={cn(
-        "relative mx-auto min-h-fit w-full max-w-[400px] cursor-pointer overflow-hidden rounded-2xl p-4",
-        // animation styles
-        "transition-all duration-200 ease-in-out hover:scale-[103%]",
-        // light styles
-        "bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
-        // dark styles
-        "transform-gpu dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
+        "relative mx-auto min-h-fit w-full h-full cursor-pointer overflow-hidden rounded-3xl p-4",
+        // glass theme styles
+        "bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl transition-all duration-300 hover:bg-white/10"
       )}
     >
-      <div className="flex flex-row items-center gap-3">
+      <div className="flex flex-row items-center gap-3 h-full">
         <div
           className="flex size-10 items-center justify-center rounded-2xl"
           style={{
@@ -69,12 +69,13 @@ export const Notification = ({ name, description, icon, color, time }: Item) => 
           <span className="text-lg">{icon}</span>
         </div>
         <div className="flex flex-col overflow-hidden">
-          <figcaption className="flex flex-row items-center whitespace-pre text-lg font-medium dark:text-white ">
+          <figcaption className="flex flex-row items-center whitespace-pre text-lg font-medium text-white ">
             <span className="text-sm sm:text-lg">{name}</span>
             <span className="mx-1">·</span>
-            <span className="text-xs text-gray-500">{time}</span>
+            <span className="text-xs text-gray-300">{time}</span>
+            {status && <span className="ml-2">{status}</span>}
           </figcaption>
-          <p className="text-sm font-normal dark:text-white/60">
+          <p className="text-sm font-normal text-white/70">
             {description}
           </p>
         </div>
@@ -83,7 +84,7 @@ export const Notification = ({ name, description, icon, color, time }: Item) => 
   );
 };
 
-export function AnimatedListDemo({
+export default function AnimatedListDemo({
   className,
 }: {
   className?: string;
