@@ -47,10 +47,11 @@ import HeroSection from "@/components/Hero"
 import Lenis from "lenis"
 import { HomeIcon as IconHome, UserIcon as IconUser, MessageCircleIcon as IconMessage } from "lucide-react"
 import { useEffect } from "react"
-
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { Features } from "@/components/BentoUI"
 import FAQSection from "@/components/FAQ"
 import HowItWorks from "@/components/HowItworks"
+
 
 export default function Home() {
   const navItems = [
@@ -111,11 +112,13 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
+
       <HeroSection />
      
       <Features />
       <HowItWorks/>
       <FAQSection />
+      <SmoothCursor />
       {/* Optional dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/20 pointer-events-none -z-10"></div>
 

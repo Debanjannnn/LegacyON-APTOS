@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useState, useEffect } from "react"
 import { Logos } from "./LogoCloud"
+import { AnimatedShinyTextDemo } from "./ShinyText"
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -36,26 +37,6 @@ export default function HeroSection() {
         })
       }, 30)
     }, 1000)
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  // Typewriter effect for main heading
-  const [displayedText, setDisplayedText] = useState("")
-  const fullText = "Building the Future"
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      let index = 0
-      const typeInterval = setInterval(() => {
-        if (index < fullText.length) {
-          setDisplayedText(fullText.slice(0, index + 1))
-          index++
-        } else {
-          clearInterval(typeInterval)
-        }
-      }, 100)
-    }, 500)
 
     return () => clearTimeout(timer)
   }, [])
@@ -93,52 +74,17 @@ export default function HeroSection() {
       </div>
 
       {/* Waitlist Counter */}
-      <motion.div
-        className="flex items-center space-x-3 mb-8 bg-black/40 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        style={{ y: y2 }}
-      >
-        {/* Avatar Images with floating animation */}
-        <div className="flex -space-x-2">
-          {[
-            "from-blue-400 to-purple-500",
-            "from-green-400 to-blue-500",
-            "from-pink-400 to-red-500",
-            "from-yellow-400 to-orange-500",
-          ].map((gradient, index) => (
-            <motion.div
-              key={index}
-              className={`w-8 h-8 rounded-full bg-gradient-to-r ${gradient} border-2 border-white`}
-              animate={{
-                y: [0, -5, 0],
-                rotate: [0, 5, -5, 0],
-              }}
-              transition={{
-                duration: 2 + index * 0.5,
-                repeat: Number.POSITIVE_INFINITY,
-                delay: index * 0.2,
-              }}
-            />
-          ))}
-        </div>
-        <span className="text-white/90 text-sm font-light">{count.toLocaleString()}K currently on the waitlist</span>
-      </motion.div>
-
-      {/* Main Heading with typewriter effect */}
+     
+      <AnimatedShinyTextDemo />
+      {/* Main Heading without typewriter effect */}
       <motion.h1
         className="text-5xl md:text-7xl lg:text-8xl font-thin text-white mb-4 max-w-6xl leading-tight"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
       >
-        {displayedText}
-        <motion.span
-          className="inline-block w-1 h-16 md:h-20 lg:h-24 bg-white ml-2"
-          animate={{ opacity: [1, 0, 1] }}
-          transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
-        />
+        
+        PLAN. PROTECT. PASS.
       </motion.h1>
 
       {/* Subheading */}
@@ -148,7 +94,7 @@ export default function HeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1.5 }}
       >
-        One Startup at a Time.
+        Seamlessly on Aptos.
       </motion.h2>
 
       {/* Description */}
@@ -158,9 +104,8 @@ export default function HeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 2 }}
       >
-        Be the first to know when we launch.
-        <br />
-        Join the waitlist and get exclusive early access.
+        No courts. No delays. Just instant,<br />
+        on-chain inheritance.
       </motion.p>
 
       {/* Email Signup Form */}
