@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils"
 import { AuroraText } from "@/components/magicui/aurora-text"
 import Link from "next/link"
 import Iphone15Pro from "@/components/magicui/iphone-15-pro"
-import { AnimatedList } from "./animated-list"
-import { Notification } from "@/components/Notification"
+import AnimatedListDemo from "@/components/Notification"
+// import { Notification } from "@/components/Notification"
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -44,11 +44,11 @@ export default function BentoGrid() {
   }
 
   return (
-    <div className={cn("relative text-white px-4 md:px-6 z-10", poppins.className)}>
+    <div className={cn("relative text-white px-4 md:px-6 z-10 py-20", poppins.className)}>
       <div className="w-full max-w-[95vw] lg:max-w-[1800px] mx-auto relative z-10">
-        <div className="grid grid-cols-12 grid-rows-6 gap-4 h-[800px]">
+        <div className="grid grid-cols-12 grid-rows-6 gap-4 h-[800px] ">
           <motion.h1
-            className={cn("text-3xl md:text-4xl lg:text-5xl font-thin text-center mb-8 col-span-12", poppins.className)}
+            className={cn("text-3xl md:text-4xl lg:text-5xl font-thin text-center mb-20 col-span-12 ", poppins.className)}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
@@ -327,75 +327,24 @@ export default function BentoGrid() {
           </Link>
 
           {/* Smart Contract Features - Bottom Right */}
-          <Link href="/smart-contracts" className="col-span-12 md:col-span-4 row-span-3 group cursor-pointer">
-          <motion.div
-            className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 text-white relative overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 shadow-xl"
-            variants={cardVariants}
-            initial="initial"
-            animate="animate"
-            custom={6}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+          <Link href="/" className="col-span-12 md:col-span-4 row-span-3 group cursor-pointer">
+            <motion.div
+              className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 text-white relative overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 shadow-xl"
+              variants={cardVariants}
+              initial="initial"
+              animate="animate"
+              custom={6}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
 
-            <div className="relative z-10 h-full flex flex-col">
-              {/* Smart Contract Cards */}
-              <div className="mb-4 flex-1 flex flex-col justify-start">
-                <AnimatedList delay={1200} className="w-full">
-                  {[
-                    {
-                      name: "Will Contract",
-                      description: "Active & Secure",
-                      time: "✓ Active",
-                      icon: "SC",
-                      color: "#1E86FF",
-                      status: <span className='text-green-400 text-xs'>Verified</span>,
-                    },
-                    {
-                      name: "Asset Distribution",
-                      description: "Automated",
-                      time: "Ready",
-                      icon: "AS",
-                      color: "#df500f",
-                      status: <span className='text-blue-400 text-xs'>Pending</span>,
-                    },
-                    {
-                      name: "Beneficiary Added",
-                      description: "New beneficiary assigned",
-                      time: "2m ago",
-                      icon: "BA",
-                      color: "#22c55e",
-                      status: <span className='text-green-400 text-xs'>New</span>,
-                    },
-                    {
-                      name: "Audit Passed",
-                      description: "Security audit successful",
-                      time: "3h ago",
-                      icon: "🛡️",
-                      color: "#2563eb",
-                      status: <span className='text-green-400 text-xs'>Passed</span>,
-                    },
-                  ].map((item, idx) => (
-                    <Notification key={idx} {...item} />
-                  ))}
-                </AnimatedList>
-              </div>
-
-              <div className="mt-auto">
-                <h3 className="text-xl font-thin text-white mb-2">Smart Contracts</h3>
-                <p className="text-white/70 text-sm leading-relaxed mb-4 font-light">
-                  Automated execution with blockchain security and transparency
-                </p>
-
-                <div className="flex justify-end">
-                  <ArrowRight
-                    className="text-white w-6 h-6 group-hover:translate-x-1 transition-transform"
-                    strokeWidth={2}
-                  />
+              <div className="relative z-10 h-full flex flex-col">
+                {/* Smart Contract Cards */}
+                <div className="mb-4 flex-1 flex flex-col justify-start">
+                  <AnimatedListDemo />
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </Link>
+            </motion.div>
+          </Link>
         </div>
       </div>
     </div>
