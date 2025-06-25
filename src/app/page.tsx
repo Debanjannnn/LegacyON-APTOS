@@ -9,7 +9,7 @@ import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { Features } from "@/components/BentoUI"
 import FAQSection from "@/components/FAQ"
 import HowItWorks from "@/components/HowItworks"
-import { AnimatedShinyTextDemo } from "@/components/ShinyText"
+
 
 
 export default function Home() {
