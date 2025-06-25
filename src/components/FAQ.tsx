@@ -1,7 +1,7 @@
 "use client"
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { motion } from "framer-motion"
+import { motion, easeOut } from "framer-motion"
 import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { AuroraText } from "@/components/magicui/aurora-text"
@@ -55,7 +55,7 @@ const FAQSection = () => {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: "easeOut",
+        ease: easeOut,
       },
     },
   }
