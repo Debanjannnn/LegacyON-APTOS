@@ -6,6 +6,7 @@ import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { AuroraText } from "@/components/magicui/aurora-text"
 import Link from "next/link"
+import Iphone15Pro from "@/components/magicui/iphone-15-pro"
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -95,6 +96,16 @@ export default function BentoGrid() {
                 <p className="text-white/70 text-sm font-light">
                   Execute wills and distribute assets instantly with Aptos's lightning-fast blockchain.
                 </p>
+              </div>
+
+              {/* iPhone 15 Pro mockup with Aptos image */}
+              <div className="flex justify-center my-4">
+                <Iphone15Pro
+                  width={120}
+                  height={245}
+                  src="/aptos.png"
+                  className="shadow-lg rounded-3xl border border-white/10 bg-white/10"
+                />
               </div>
 
               <div className="flex justify-end">
