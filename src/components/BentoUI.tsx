@@ -2,17 +2,15 @@ import React from 'react';
 
 
 import BentoGrid from '@/components/magicui/bento-grid';
-import { SideGridBackground } from "@/components/SideGridBackgroud";
 
 export const Features = () => {
 
   return (
 
     <div 
-      className="py-10 w-full h-full px-4" 
-
+      className="w-full h-full px-4 bg-[#0e090200]" 
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto bg-[#0e090200]">
           <BentoGrid />
       </div>
     </div>

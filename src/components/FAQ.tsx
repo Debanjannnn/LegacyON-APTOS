@@ -61,9 +61,9 @@ const FAQSection = () => {
   }
 
   return (
-    <section className={cn("py-20 px-4 sm:px-6 lg:px-8 bg-black relative", poppins.className)}>
+    <section className={cn("py-20 px-4 sm:px-6 lg:px-8 bg-[#0e090200] relative", poppins.className)}>
       {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[#0e090200] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div

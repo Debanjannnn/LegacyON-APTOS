@@ -1,45 +1,3 @@
-// "use client";
-
-// import { AccountInfo } from "@/components/AccountInfo";
-// import { Header } from "@/components/Header";
-// import { MessageBoard } from "@/components/MessageBoard";
-// import { NetworkInfo } from "@/components/NetworkInfo";
-// import { TopBanner } from "@/components/TopBanner";
-// import { TransferAPT } from "@/components/TransferAPT";
-// import { WalletDetails } from "@/components/WalletDetails";
-// // Internal Components
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { useWallet } from "@aptos-labs/wallet-adapter-react";
-
-// function App() {
-//   const { connected } = useWallet();
-
-//   return (
-//     <>
-//     <TopBanner />
-//       <Header />
-//       <div className="flex items-center justify-center flex-col">
-//         {connected ? (
-//           <Card>
-//             <CardContent className="flex flex-col gap-10 pt-6">
-//               <WalletDetails />
-//               <NetworkInfo />
-//               <AccountInfo />
-//               <TransferAPT />
-//               <MessageBoard />
-//             </CardContent>
-//           </Card>
-//         ) : (
-//           <CardHeader>
-//             <CardTitle>To get started Connect a wallet</CardTitle>
-//           </CardHeader>
-//         )}
-//       </div>
-//     </>
-//   );
-// }
-
-// export default App;
 "use client"
 
 import { FloatingNav } from "@/components/ui/floating-navbar"
@@ -51,6 +9,7 @@ import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { Features } from "@/components/BentoUI"
 import FAQSection from "@/components/FAQ"
 import HowItWorks from "@/components/HowItworks"
+import { AnimatedShinyTextDemo } from "@/components/ShinyText"
 
 
 export default function Home() {
@@ -109,11 +68,16 @@ export default function Home() {
         {/* Navigation */}
       <div className="absolute top-0 left-0 right-0 z-10 py-4">
         <FloatingNav navItems={navItems} />
+        {/* <div className="absolute top-0 left-0 right-0 z-10 py-4">
+        <AnimatedShinyTextDemo />
+        </div> */}
       </div>
 
       {/* Hero Section */}
-
-      <HeroSection />
+         
+      <div className="mt-20">
+        <HeroSection />
+      </div>
      
       <Features />
       <HowItWorks/>

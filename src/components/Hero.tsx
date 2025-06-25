@@ -75,7 +75,7 @@ export default function HeroSection() {
 
       {/* Waitlist Counter */}
      
-      <AnimatedShinyTextDemo />
+      {/* <AnimatedShinyTextDemo /> */}
       {/* Main Heading without typewriter effect */}
       <motion.h1
         className="text-5xl md:text-7xl lg:text-8xl font-thin text-white mb-4 max-w-6xl leading-tight"
@@ -139,16 +139,14 @@ export default function HeroSection() {
 
       {/* Social Media Icons */}
       <motion.div
-        className="flex items-center space-x-8"
+        className="flex items-center space-x-8 pt-20"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 2.6 }}
       >
         <Logos />
-
       </motion.div>
-
-
+      
     </motion.div>
   )
 }

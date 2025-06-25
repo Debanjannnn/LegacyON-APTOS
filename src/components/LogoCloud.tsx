@@ -3,7 +3,7 @@ import Image from "next/image"
 
 const companies = [
   {
-    name: "Google",
+    name: "Aptos",
     url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066341/Google_fav2wl.svg",
   },
   {

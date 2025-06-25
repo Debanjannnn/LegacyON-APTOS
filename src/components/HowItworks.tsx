@@ -110,9 +110,9 @@ export default function HowItWorks() {
   ]
 
   return (
-    <div className={cn("relative text-white py-20 px-4 md:px-6 z-10 bg-black", poppins.className)}>
+    <div className={cn("relative text-white py-20 px-4 md:px-6 z-10 bg-[#0e090200]", poppins.className)}>
       {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[#0e090200] pointer-events-none"></div>
 
       {/* SVG Gradients for icons */}
       <svg width="0" height="0" className="absolute">
@@ -135,13 +135,13 @@ export default function HowItWorks() {
           transition={{ duration: 0.7 }}
         >
           <motion.h1
-            className={cn("text-3xl md:text-4xl lg:text-5xl font-thin text-center mb-4", poppins.className)}
+            className={cn("text-3xl md:text-4xl lg:text-5xl font-thin text-center mb-4 text-white", poppins.className)}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
             <AuroraText colors={["#df500f", "#ff6b35", "#ffffff", "#c4460d"]}>
-              <span className="text-transparent">How It Works</span>
+              <span className="text-transparent bg-clip-text">How It Works</span>
             </AuroraText>
           </motion.h1>
           <motion.p
@@ -190,7 +190,7 @@ export default function HowItWorks() {
                 {/* Content */}
                 <h3
                   className={cn(
-                    "text-2xl font-thin mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-t group-hover:from-white group-hover:to-[#df500f] transition-colors duration-300",
+                    "text-2xl font-thin mb-4 text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-t group-hover:from-white group-hover:to-[#df500f] transition-colors duration-300",
                     poppins.className,
                   )}
                 >
@@ -203,7 +203,7 @@ export default function HowItWorks() {
                   {step.features.map((feature, featureIndex) => (
                     <motion.li
                       key={featureIndex}
-                      className="flex items-center text-xs text-white/60"
+                      className="flex items-center text-xs text-white/70"
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + featureIndex * 0.1, duration: 0.5 }}
