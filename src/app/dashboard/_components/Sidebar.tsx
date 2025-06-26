@@ -6,7 +6,7 @@ import { IconArrowLeft, IconBrandTabler } from "@tabler/icons-react"
 import { motion } from "motion/react"
 import { cn } from "@/lib/utils"
 import { WalletSelector } from "@/components/WalletSelector"
-import Link from "next/link"
+// import Link from "next/link"
 import { FileText, Shield } from "lucide-react"
 
 export function SidebarDemo({ children, onSectionChange }: { children: React.ReactNode, onSectionChange?: (section: string) => void }) {
@@ -106,7 +106,7 @@ export function SidebarDemo({ children, onSectionChange }: { children: React.Rea
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="text-xs text-white/50">Secured by EDU Chain</span>
+                    <span className="text-xs text-white/50">Secured by Aptos Chain</span>
                   </div>
                 </div>
               </div>
