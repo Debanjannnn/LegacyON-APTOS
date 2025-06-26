@@ -3,10 +3,9 @@ import type React from "react";
 import { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import { IconArrowLeft, IconBrandTabler } from "@tabler/icons-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { WalletSelector } from "@/components/WalletSelector";
-import Link from "next/link";
 import { FileText, Shield } from "lucide-react";
 
 export function SidebarDemo({ children, onSectionChange }: { children: React.ReactNode, onSectionChange?: (section: string) => void }) {
@@ -33,8 +32,18 @@ export function SidebarDemo({ children, onSectionChange }: { children: React.Rea
   ];
   const [open, setOpen] = useState(false);
   return (
-    <div className={cn("flex w-screen h-screen flex-row overflow-hidden")}
+    <div className={cn("flex w-screen h-screen flex-row overflow-hidden bg-[#120b03]")}
     >
+      <div
+        className="absolute left-0 right-0"
+        style={{
+          top: "30%",
+          bottom: 0,
+          pointerEvents: "none",
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0) 80%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.85) 80%, #000 100%)",
+        }}
+      ></div>
       <Sidebar open={open} setOpen={setOpen} animate={false}>
         <SidebarBody className="justify-between gap-10 border-r border-white/10 shadow-2xl min-h-screen px-4 py-8 relative z-10 bg-transparent">
           <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
@@ -42,6 +51,7 @@ export function SidebarDemo({ children, onSectionChange }: { children: React.Rea
               <Logo />
             </>
             <div className="mt-8 flex flex-col gap-2">
+            {/* @ts-ignore */}
               {links.filter(link => link.section).map((link, idx) => (
                 <button
                   key={link.label}

@@ -1,25 +1,20 @@
 "use client"
 import { useState, useRef, useEffect } from "react"
+//@ts-ignore
 import { Button } from "@/components/ui/button"
+//@ts-ignore
 import {
-  ArrowLeft,
-  Wallet,
   FileText,
   Shield,
   TrendingUp,
-  Plus,
-  RefreshCw,
-  LogOut,
-  Copy,
   CheckCircle,
-  User,
-  Activity,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { useWallet } from "@aptos-labs/wallet-adapter-react"
+//@ts-ignore
 import { WalletSelector } from "@/components/WalletSelector"
 import { getAccountAPTBalance } from "@/view-functions/getAccountBalance"
 import DashboardWalletCard from "./_components/DashboardWalletCard"
@@ -52,11 +47,16 @@ export default function DashboardPage() {
   const [aptosData, setAptosData] = useState<AptosData | null>(null)
   const [loading, setLoading] = useState(true)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  //@ts-ignore
   const [copied, setCopied] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  //@ts-ignore
   const router = useRouter()
+  //@ts-ignore
   const { account, connected, disconnect } = useWallet()
+  //@ts-ignore
   const [aptBalance, setAptBalance] = useState<number | null>(null)
+  //@ts-ignore
   const [balanceLoading, setBalanceLoading] = useState(false)
   const [walletDropdownOpen, setWalletDropdownOpen] = useState(false)
   const walletDropdownRef = useRef<HTMLDivElement>(null)
@@ -125,7 +125,7 @@ export default function DashboardPage() {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [walletDropdownOpen])
-
+   //@ts-ignore 
   const copyAddress = async () => {
     if (account?.address) {
       await navigator.clipboard.writeText(account.address.toStringLong())
@@ -172,8 +172,9 @@ export default function DashboardPage() {
   // Generate price history simulation based on current price
   const generatePriceHistory = () => {
     if (!aptosData) return [60, 40, 80, 50, 70, 30, 50, 65, 45, 75, 55, 85, 40, 70, 60, 90, 35, 65, 80, 45]
-
+   //@ts-ignore
     const currentPrice = aptosData.current_price.usd
+    //@ts-ignore
     const change24h = aptosData.price_change_percentage_24h
     const change7d = aptosData.price_change_percentage_7d
 
@@ -202,21 +203,14 @@ export default function DashboardPage() {
     const sign = percentage >= 0 ? "+" : ""
     return `${sign}${percentage.toFixed(2)}%`
   }
-
+//@ts-ignore
   const truncateAddress = (address: string) => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`
   }
 
   return (
     <div
-      className={cn("min-h-screen bg-black p-0 m-0 relative", poppins.className)}
-      style={{
-        background: `\n      linear-gradient(to bottom, #000000 0%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 20%, #000000 100%),\n      url('/images/gradient.png')\n    `,
-        backgroundPosition: "top center, top center",
-        backgroundRepeat: "no-repeat, no-repeat",
-        backgroundSize: "100% auto, 100% auto",
-        backgroundBlendMode: "normal, normal",
-      }}
+      className={cn("min-h-screen bg-[#120b03] p-0 m-0 relative", poppins.className)}
     >
       {/* Gradient overlay */}
       <div

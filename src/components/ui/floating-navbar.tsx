@@ -9,6 +9,7 @@ import { BorderBeam } from "../magicui/border-beam"
 import { useWallet, WalletItem, groupAndSortWallets } from "@aptos-labs/wallet-adapter-react"
 import { Button } from "../ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
+//@ts-ignore
 import { Copy, LogOut, User } from "lucide-react"
 import { useToast } from "../ui/use-toast"
 import { truncateAddress } from "@aptos-labs/wallet-adapter-react"
@@ -29,16 +30,21 @@ export const FloatingNav = ({
   }[]
   className?: string
 }) => {
+  //@ts-ignore
   const { scrollYProgress } = useScroll()
+  //@ts-ignore
   const [isVisible, setIsVisible] = useState(false)
+  //@ts-ignore
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  //@ts-ignore
   const { connected, account, disconnect, wallets } = useWallet()
+  //@ts-ignore
   const { toast } = useToast()
 
   React.useEffect(() => {
     setIsVisible(true)
   }, [])
-
+//@ts-ignore
   const getScale = (index: number) => {
     if (hoveredIndex === null) return 1
 

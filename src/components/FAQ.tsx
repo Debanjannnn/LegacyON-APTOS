@@ -4,7 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { motion, easeOut } from "framer-motion"
 import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
-import { AuroraText } from "@/components/magicui/aurora-text"
+
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],

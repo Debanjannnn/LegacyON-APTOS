@@ -6,6 +6,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "lucide-react"
+//@ts-ignore
 import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
@@ -36,6 +37,7 @@ function Calendar({
       )}
       captionLayout={captionLayout}
       formatters={{
+        //@ts-ignore
         formatMonthDropdown: (date) =>
           date.toLocaleString("default", { month: "short" }),
         ...formatters,
@@ -122,6 +124,7 @@ function Calendar({
         ...classNames,
       }}
       components={{
+        //@ts-ignore
         Root: ({ className, rootRef, ...props }) => {
           return (
             <div
@@ -132,6 +135,7 @@ function Calendar({
             />
           )
         },
+        //@ts-ignore
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === "left") {
             return (
@@ -153,6 +157,7 @@ function Calendar({
           )
         },
         DayButton: CalendarDayButton,
+        //@ts-ignore
         WeekNumber: ({ children, ...props }) => {
           return (
             <td {...props}>

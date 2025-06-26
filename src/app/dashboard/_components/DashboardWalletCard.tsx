@@ -3,18 +3,18 @@ import { useState, useRef, useEffect } from "react"
 import { useWallet } from "@aptos-labs/wallet-adapter-react"
 import { WalletSelector } from "@/components/WalletSelector"
 import { getAccountAPTBalance } from "@/view-functions/getAccountBalance"
-import { Plus, LogOut, Copy, CheckCircle, User, Shield } from "lucide-react"
+import { User, Shield, Wallet, Wifi, QrCode } from "lucide-react"
 import { motion } from "framer-motion"
 
 const truncateAddress = (address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`
 
 export default function DashboardWalletCard({ aptosData }: { aptosData: any }) {
-  const { account, connected, disconnect } = useWallet()
+  const { account, connected } = useWallet()
   const [aptBalance, setAptBalance] = useState<number | null>(null)
   const [balanceLoading, setBalanceLoading] = useState(false)
   const [walletDropdownOpen, setWalletDropdownOpen] = useState(false)
   const walletDropdownRef = useRef<HTMLDivElement>(null)
-  const [copied, setCopied] = useState(false)
+
 
   useEffect(() => {
     if (connected && account?.address) {
@@ -43,143 +43,139 @@ export default function DashboardWalletCard({ aptosData }: { aptosData: any }) {
     }
   }, [walletDropdownOpen])
 
-  const copyAddress = async () => {
-    if (account?.address) {
-      await navigator.clipboard.writeText(account.address.toStringLong())
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    }
+
+
+  // Not connected state
+  if (!connected) {
+    return (
+      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 text-center">
+        <div className="w-16 h-16 bg-gradient-to-br from-white/10 to-[#C0C0C0]/30 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/10">
+          <User className="w-8 h-8 text-[#C0C0C0]" />
+        </div>
+        <h3 className="text-white text-xl font-thin mb-3">Connect Your Wallet</h3>
+        <p className="text-white/60 text-sm mb-6 leading-relaxed">
+          Connect your wallet.
+        </p>
+        <WalletSelector />
+        <div className="mt-6 pt-6 border-t border-white/10">
+          <div className="flex items-center justify-center gap-2 text-xs text-white/40">
+            <Shield className="w-4 h-4" />
+            <span>Secured by Aptos Blockchain</span>
+          </div>
+        </div>
+      </div>
+    )
   }
 
-  return !connected ? (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 text-center">
-      <div className="w-16 h-16 bg-gradient-to-br from-white/10 to-[#C0C0C0]/30 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/10">
-        <User className="w-8 h-8 text-[#C0C0C0]" />
-      </div>
-      <h3 className="text-white text-xl font-thin mb-3">Connect Your Wallet</h3>
-      <p className="text-white/60 text-sm mb-6 leading-relaxed">
-        Connect your wallet.
-      </p>
-      <WalletSelector />
-      <div className="mt-6 pt-6 border-t border-white/10">
-        <div className="flex items-center justify-center gap-2 text-xs text-white/40">
-          <Shield className="w-4 h-4" />
-          <span>Secured by Aptos Blockchain</span>
-        </div>
-      </div>
-    </div>
-  ) : (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 text-white shadow-lg relative overflow-hidden">
-      <div className="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-      <div className="relative z-10">
-        {/* Wallet Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-              <User className="w-5 h-5 text-[#C0C0C0]" />
-            </div>
-            <div>
-              <div className="text-sm font-medium">Wallet Details</div>
-              <div className="text-xs opacity-80">Connected</div>
-            </div>
-          </div>
-          <div className="relative" ref={walletDropdownRef}>
-            <motion.button
-              className="bg-white/20 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setWalletDropdownOpen(!walletDropdownOpen)}
-            >
-              <Plus className="w-4 h-4" />
-            </motion.button>
-            {walletDropdownOpen && (
-              <motion.div
-                className="absolute right-0 mt-2 w-48 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl z-50 overflow-hidden"
-                initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <button
-                  className="w-full text-left px-4 py-3 text-white/80 hover:bg-white/10 transition-colors flex items-center gap-3"
-                  onClick={copyAddress}
-                >
-                  {copied ? <CheckCircle className="w-4 h-4 text-[#C0C0C0]" /> : <Copy className="w-4 h-4 text-[#C0C0C0]" />}
-                  <span className="text-sm">{copied ? "Copied!" : "Copy Address"}</span>
-                </button>
-                <div className="border-t border-white/10"></div>
-                <button
-                  className="w-full text-left px-4 py-3 text-red-400 hover:bg-red-500/10 transition-colors flex items-center gap-3"
-                  onClick={() => {
-                    disconnect()
-                    setWalletDropdownOpen(false)
-                  }}
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span className="text-sm">Disconnect</span>
-                </button>
-              </motion.div>
-            )}
-          </div>
-        </div>
-        {/* Balance Display */}
-        <div className="mb-4">
-          <div className="text-3xl font-thin mb-2">
-            {balanceLoading ? (
-              <div className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-                <span className="text-lg">Loading...</span>
+  // Connected state: Modern Card UI
+  return (
+    <div className="min-h-[18rem] flex items-center justify-center p-0">
+      <motion.div
+        className="relative w-96 h-60 rounded-2xl overflow-hidden cursor-pointer"
+        initial={{ scale: 1.20 }}
+        // whileHover={{
+        //   scale: 1.05,
+        //   transition: { duration: 0.6, ease: "easeOut" },
+        // }}
+        style={{
+          background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 40%, #2a2a2a 70%, #f5f5f7 100%)",
+        }}
+      >
+        {/* Matte texture overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/3 via-transparent to-black/20" />
+
+        {/* Subtle noise texture for satin finish */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
+        />
+
+        {/* Soft spotlight effect */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-radial from-white/15 via-white/5 to-transparent opacity-0"
+          style={{
+            background:
+              "radial-gradient(circle 200px at var(--x, 50%) var(--y, 50%), rgba(245,245,247,0.15) 0%, rgba(245,245,247,0.05) 40%, transparent 70%)",
+          }}
+          whileHover={{
+            opacity: 1,
+            transition: { duration: 0.8, ease: "easeInOut" },
+          }}
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect()
+            const x = ((e.clientX - rect.left) / rect.width) * 100
+            const y = ((e.clientY - rect.top) / rect.height) * 100
+            e.currentTarget.style.setProperty("--x", `${x}%`)
+            e.currentTarget.style.setProperty("--y", `${y}%`)
+          }}
+        />
+
+        {/* Card content */}
+        <div className="relative z-10 h-full p-6 flex flex-col justify-between text-white font-inter">
+          {/* Top row */}
+          <div className="flex justify-between items-start">
+            {/* Logo */}
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                <Wallet className="w-5 h-5 text-white" />
               </div>
-            ) : aptBalance !== null ? (
-              `${aptBalance.toFixed(4)} APT`
-            ) : (
-              "0.0000 APT"
-            )}
+              <span className="text-sm font-semibold tracking-wider uppercase">APTOS WALLET</span>
+            </div>
+
+            {/* NFC/Chip symbol */}
+            <div className="w-10 h-8 rounded border border-white/30 flex items-center justify-center">
+              <Wifi className="w-4 h-4 text-white/70" />
+            </div>
           </div>
-          {aptosData && aptBalance && (
-            <div className="text-sm opacity-80">
-              ≈ {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 4 }).format(aptBalance * aptosData.current_price.usd)}
-            </div>
-          )}
-        </div>
-        {/* Address Display */}
-        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 mb-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-xs opacity-60 mb-1">Wallet Address</div>
-              <div className="text-sm font-mono">
-                {account?.address ? truncateAddress(account.address.toStringLong()) : ""}
-              </div>
-            </div>
-            <motion.button
-              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={copyAddress}
-            >
-              {copied ? (
-                <CheckCircle className="w-4 h-4 text-[#C0C0C0]" />
+
+          {/* Middle section - Balance and Network info */}
+          <div className="flex flex-col space-y-1">
+            <span className="text-xs font-medium tracking-widest uppercase text-white/70">APTOS NETWORK</span>
+            <span className="text-lg font-semibold tracking-wider">
+              {balanceLoading ? (
+                <span className="flex items-center gap-2"><span className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></span> Loading...</span>
+              ) : aptBalance !== null ? (
+                `${aptBalance.toFixed(4)} APT`
               ) : (
-                <Copy className="w-4 h-4 text-white/60" />
+                "0.0000 APT"
               )}
-            </motion.button>
-          </div>
-        </div>
-        {/* Status Indicators */}
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-[#C0C0C0] rounded-full animate-pulse"></div>
-            <span className="text-[#C0C0C0]">Aptos Blockchain • Active</span>
-          </div>
-          {aptosData && (
-            <span
-              className={`px-2 py-1 rounded-full text-xs bg-white/10 text-[#C0C0C0]`}
-            >
-              {aptosData.price_change_percentage_24h >= 0 ? "+" : ""}
-              {aptosData.price_change_percentage_24h.toFixed(2)}%
             </span>
-          )}
+            {aptosData && aptBalance && (
+              <span className="text-xs text-white/60">
+                ≈ {new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 4 }).format(aptBalance * aptosData.current_price.usd)}
+              </span>
+            )}
+          </div>
+
+          {/* Bottom row */}
+          <div className="flex justify-between items-end">
+            {/* User info */}
+            <div className="flex flex-col">
+              <span className="text-xs font-medium tracking-widest uppercase text-white/70 mb-1">CARDHOLDER</span>
+              <span className="text-sm font-semibold tracking-wider uppercase">{account?.address ? truncateAddress(account.address.toStringLong()) : "-"}</span>
+              <span className="text-xs text-white/60 tracking-wide">{account?.address ? `@aptos` : ""}</span>
+            </div>
+
+            {/* QR/Address */}
+            <div className="flex flex-col items-end">
+              <QrCode className="w-6 h-6 text-white/70 mb-1" />
+              <span className="text-xs text-white/60 tracking-wider font-mono">{account?.address ? truncateAddress(account.address.toStringLong()) : ""}</span>
+            </div>
+          </div>
         </div>
-      </div>
+
+        {/* Hover shadow */}
+        <motion.div
+          className="absolute -inset-4 bg-gradient-to-br from-gray-300/10 to-black/30 rounded-3xl -z-10 blur-xl"
+          initial={{ opacity: 0 }}
+          whileHover={{
+            opacity: 1,
+            transition: { duration: 0.6, ease: "easeOut" },
+          }}
+        />
+      </motion.div>
     </div>
   )
 } 

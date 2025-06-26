@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils";
 import React from "react";
-import { Particles } from "@/components/magicui/particles";
+// import { Particles } from "@/components/magicui/particles";
 
 export function SideGridBackground({ children }: { children: React.ReactNode }) {
   return (

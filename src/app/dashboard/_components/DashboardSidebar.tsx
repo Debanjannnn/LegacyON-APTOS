@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Wallet, FileText, Shield, TrendingUp } from "lucide-react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
+
 
 export default function DashboardSidebar() {
   const router = useRouter()
