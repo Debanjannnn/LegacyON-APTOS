@@ -9,6 +9,9 @@ legacyON APTOS SimpleWill is a trustless, decentralized solution for managing di
 - Designate a recipient who can claim the funds
 - Maintain full control over the will until the recipient claims the funds
 
+#address
+-https://explorer.aptoslabs.com/txn/0x6615658c6f7a8fdeaaf4dc5ffad498c6d6d94e5c5285bb47808d7f707396f252?network=testnet
+
 ## ✨ Features
 
 ### Smart Contract Features

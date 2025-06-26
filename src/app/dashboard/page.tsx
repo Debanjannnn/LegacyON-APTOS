@@ -210,8 +210,25 @@ export default function DashboardPage() {
   return (
     <div
       className={cn("min-h-screen bg-black p-0 m-0 relative", poppins.className)}
+      style={{
+        background: `\n      linear-gradient(to bottom, #000000 0%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 20%, #000000 100%),\n      url('/images/gradient.png')\n    `,
+        backgroundPosition: "top center, top center",
+        backgroundRepeat: "no-repeat, no-repeat",
+        backgroundSize: "100% auto, 100% auto",
+        backgroundBlendMode: "normal, normal",
+      }}
     >
-      {/* No gradient overlay, solid black background */}
+      {/* Gradient overlay */}
+      <div
+        className="absolute left-0 right-0"
+        style={{
+          top: "30%",
+          bottom: 0,
+          pointerEvents: "none",
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.85) 80%, #000 100%)",
+        }}
+      ></div>
 
       <div className="w-screen h-screen flex flex-row">
         <SidebarDemo onSectionChange={setActiveSection}>
