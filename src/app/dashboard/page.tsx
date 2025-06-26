@@ -22,8 +22,8 @@ import DashboardTransactions, { DashboardTransaction } from "./_components/Dashb
 import { SidebarDemo } from "./_components/Sidebar"
 import DashboardAssetDistribution from "./_components/DashboardAssetDistribution"
 import DashboardPriceChart from "./_components/DashboardPriceChart"
-import DashboardCreateWill from "./createwill/page"
-import CheckWillPage from "./checkwill/page"
+import DashboardCreateWill from "./createwill/CreateWillPage"
+import CheckWillPage from "./checkwill/CheckWillPage"
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -125,7 +125,7 @@ export default function DashboardPage() {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [walletDropdownOpen])
-   //@ts-ignore 
+  //@ts-ignore 
   const copyAddress = async () => {
     if (account?.address) {
       await navigator.clipboard.writeText(account.address.toStringLong())
@@ -172,7 +172,7 @@ export default function DashboardPage() {
   // Generate price history simulation based on current price
   const generatePriceHistory = () => {
     if (!aptosData) return [60, 40, 80, 50, 70, 30, 50, 65, 45, 75, 55, 85, 40, 70, 60, 90, 35, 65, 80, 45]
-   //@ts-ignore
+    //@ts-ignore
     const currentPrice = aptosData.current_price.usd
     //@ts-ignore
     const change24h = aptosData.price_change_percentage_24h
@@ -203,7 +203,7 @@ export default function DashboardPage() {
     const sign = percentage >= 0 ? "+" : ""
     return `${sign}${percentage.toFixed(2)}%`
   }
-//@ts-ignore
+  //@ts-ignore
   const truncateAddress = (address: string) => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`
   }
