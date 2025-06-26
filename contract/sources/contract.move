@@ -1,147 +1,133 @@
-module contract::smart_will {
-    use std::{signer, string, error, vector, option, timestamp};
+module contract::will {
+    use std::signer;
+    use std::error;
     use aptos_framework::coin;
     use aptos_framework::aptos_coin::AptosCoin;
 
-    const E_WILL_EXISTS: u64 = 1;
-    const E_WILL_NOT_EXISTS: u64 = 2;
+    /// Error codes
+    const E_NOT_OWNER: u64 = 1;
+    const E_NOT_RECIPIENT: u64 = 2;
     const E_INVALID_RECIPIENT: u64 = 3;
-    const E_NOT_RECIPIENT: u64 = 4;
-    const E_OWNER_STILL_ACTIVE: u64 = 5;
-    const E_NO_FUNDS: u64 = 6;
-    const E_INVALID_DESCRIPTION: u64 = 7;
+    const E_NO_FUNDS: u64 = 4;
+    const E_WILL_NOT_INITIALIZED: u64 = 5;
 
+    /// The Will resource that holds the state
     struct Will has key {
-        start_time: u64,
-        last_visited: u64,
-        ten_years: u64,
+        owner: address,
         recipient: address,
-        description: string::String,
-        exists: bool,
-        balance: coin::Coin<AptosCoin>
+        funds: coin::Coin<AptosCoin>,
     }
 
-    struct WillRegistry has key {
-        creators: vector<address>
-    }
-
-    /// Initialize will for a user
-    public entry fun create_will(
-        account: &signer,
-        recipient: address,
-        description: string::String,
-        deposit_amount: u64
-    ) {
-        let sender = signer::address_of(account);
-        assert!(!exists<Will>(sender), error::already_exists(E_WILL_EXISTS));
-        assert!(recipient != @0x0 && recipient != sender, error::invalid_argument(E_INVALID_RECIPIENT));
-        assert!(coin::balance<AptosCoin>(account) >= deposit_amount, error::invalid_argument(E_NO_FUNDS));
-        assert!(string::length(&description) >= 50, error::invalid_argument(E_INVALID_DESCRIPTION));
-
-        let coins = coin::withdraw<AptosCoin>(account, deposit_amount);
-        let time = timestamp::now_seconds();
+    /// Initialize a new will - must be called by the owner
+    public entry fun initialize_will(owner: &signer) {
+        let owner_addr = signer::address_of(owner);
+        
+        // Create the will resource with empty funds
         let will = Will {
-            start_time: time,
-            last_visited: time,
-            ten_years: 10 * 365 * 24 * 60 * 60,
-            recipient,
-            description,
-            exists: true,
-            balance: coins
+            owner: owner_addr,
+            recipient: @0x0, // No recipient initially
+            funds: coin::zero<AptosCoin>(),
         };
-
-        move_to(account, will);
-
-        if (!exists<WillRegistry>(@0x1)) {
-            move_to(&aptos_framework::account::create_signer(@0x1), WillRegistry { creators: vector::empty<address>() });
-        }
-
-        let registry = borrow_global_mut<WillRegistry>(@0x1);
-        vector::push_back(&mut registry.creators, sender);
+        
+        // Move the resource to the owner's account
+        move_to(owner, will);
     }
 
-    public entry fun ping(account: &signer) acquires Will {
-        let sender = signer::address_of(account);
-        assert!(exists<Will>(sender), error::not_found(E_WILL_NOT_EXISTS));
-        let will = borrow_global_mut<Will>(sender);
-        will.last_visited = timestamp::now_seconds();
+    /// Deposit funds into the will
+    public entry fun deposit(owner: &signer, amount: u64) acquires Will {
+        let owner_addr = signer::address_of(owner);
+        
+        // Check if will exists
+        assert!(exists<Will>(owner_addr), error::not_found(E_WILL_NOT_INITIALIZED));
+        
+        let will = borrow_global_mut<Will>(owner_addr);
+        
+        // Only owner can deposit
+        assert!(will.owner == owner_addr, error::permission_denied(E_NOT_OWNER));
+        
+        // Withdraw coins from owner's account and add to will
+        let deposit_coins = coin::withdraw<AptosCoin>(owner, amount);
+        coin::merge(&mut will.funds, deposit_coins);
     }
 
-    public entry fun claim(account: &signer, creator: address) acquires Will {
-        let claimer = signer::address_of(account);
-        assert!(exists<Will>(creator), error::not_found(E_WILL_NOT_EXISTS));
-
-        let will = borrow_global_mut<Will>(creator);
-        assert!(claimer == will.recipient, error::permission_denied(E_NOT_RECIPIENT));
-        assert!(timestamp::now_seconds() > will.last_visited + will.ten_years, error::invalid_state(E_OWNER_STILL_ACTIVE));
-        assert!(coin::value(&will.balance) > 0, error::invalid_state(E_NO_FUNDS));
-
-        let coins = coin::extract(&mut will.balance, coin::value(&will.balance));
-        coin::deposit<AptosCoin>(claimer, coins);
-
-        // Remove will (cleanup optional, no native support for delete in Move 1.0)
-        move_from<Will>(creator);
+    /// Set the recipient of the will
+    public entry fun set_recipient(owner: &signer, recipient_addr: address) acquires Will {
+        let owner_addr = signer::address_of(owner);
+        
+        // Check if will exists
+        assert!(exists<Will>(owner_addr), error::not_found(E_WILL_NOT_INITIALIZED));
+        
+        let will = borrow_global_mut<Will>(owner_addr);
+        
+        // Only owner can set recipient
+        assert!(will.owner == owner_addr, error::permission_denied(E_NOT_OWNER));
+        
+        // Check for valid recipient address
+        assert!(recipient_addr != @0x0, error::invalid_argument(E_INVALID_RECIPIENT));
+        
+        will.recipient = recipient_addr;
     }
 
-    public entry fun change_recipient(account: &signer, new_recipient: address) acquires Will {
-        let sender = signer::address_of(account);
-        assert!(exists<Will>(sender), error::not_found(E_WILL_NOT_EXISTS));
-        assert!(new_recipient != @0x0 && new_recipient != sender, error::invalid_argument(E_INVALID_RECIPIENT));
-
-        let will = borrow_global_mut<Will>(sender);
-        will.recipient = new_recipient;
-        will.last_visited = timestamp::now_seconds();
-    }
-
-    public entry fun deposit(account: &signer, amount: u64, new_recipient: address) acquires Will {
-        let sender = signer::address_of(account);
-        assert!(exists<Will>(sender), error::not_found(E_WILL_NOT_EXISTS));
-        assert!(new_recipient != @0x0 && new_recipient != sender, error::invalid_argument(E_INVALID_RECIPIENT));
-
-        let will = borrow_global_mut<Will>(sender);
-        let coins = coin::withdraw<AptosCoin>(account, amount);
-        coin::merge(&mut will.balance, coins);
-        will.recipient = new_recipient;
-        will.last_visited = timestamp::now_seconds();
+    /// Claim funds from the will (called by recipient)
+    public entry fun claim(recipient: &signer, will_owner_addr: address) acquires Will {
+        let recipient_addr = signer::address_of(recipient);
+        
+        // Check if will exists
+        assert!(exists<Will>(will_owner_addr), error::not_found(E_WILL_NOT_INITIALIZED));
+        
+        let will = borrow_global_mut<Will>(will_owner_addr);
+        
+        // Only recipient can claim
+        assert!(will.recipient == recipient_addr, error::permission_denied(E_NOT_RECIPIENT));
+        
+        // Check if there are funds to claim
+        let funds_amount = coin::value(&will.funds);
+        assert!(funds_amount > 0, error::invalid_state(E_NO_FUNDS));
+        
+        // Transfer all funds to recipient
+        let funds_to_transfer = coin::extract_all(&mut will.funds);
+        coin::deposit(recipient_addr, funds_to_transfer);
     }
 
     #[view]
-    public fun get_balance(account: address): u64 acquires Will {
-        assert!(exists<Will>(account), error::not_found(E_WILL_NOT_EXISTS));
-        let will = borrow_global<Will>(account);
-        coin::value(&will.balance)
-    }
-
-    #[view]
-    public fun get_total_wills(): u64 acquires WillRegistry {
-        if (!exists<WillRegistry>(@0x1)) {
-            return 0;
+    /// Get the balance of the will (view function)
+    public fun get_balance(will_owner_addr: address): u64 acquires Will {
+        if (!exists<Will>(will_owner_addr)) {
+            return 0
         };
-        let registry = borrow_global<WillRegistry>(@0x1);
-        vector::length(&registry.creators)
+        
+        let will = borrow_global<Will>(will_owner_addr);
+        coin::value(&will.funds)
     }
 
     #[view]
-    public fun get_all_wills(): vector<address> acquires WillRegistry {
-        if (!exists<WillRegistry>(@0x1)) {
-            return vector::empty<address>();
-        };
-        let registry = borrow_global<WillRegistry>(@0x1);
-        registry.creators
+    /// Get will information (view function)
+    public fun get_will_info(will_owner_addr: address): (address, address, u64) acquires Will {
+        assert!(exists<Will>(will_owner_addr), error::not_found(E_WILL_NOT_INITIALIZED));
+        
+        let will = borrow_global<Will>(will_owner_addr);
+        (will.owner, will.recipient, coin::value(&will.funds))
     }
 
     #[view]
-    public fun get_will_details(creator: address): (u64, u64, u64, address, string::String, bool, u64) acquires Will {
-        assert!(exists<Will>(creator), error::not_found(E_WILL_NOT_EXISTS));
-        let will = borrow_global<Will>(creator);
-        (
-            will.start_time,
-            will.last_visited,
-            will.ten_years,
-            will.recipient,
-            will.description,
-            will.exists,
-            coin::value(&will.balance)
-        )
+    /// Check if a will exists for an address
+    public fun will_exists(addr: address): bool {
+        exists<Will>(addr)
+    }
+
+    #[view]
+    /// Get the recipient address
+    public fun get_recipient(will_owner_addr: address): address acquires Will {
+        assert!(exists<Will>(will_owner_addr), error::not_found(E_WILL_NOT_INITIALIZED));
+        let will = borrow_global<Will>(will_owner_addr);
+        will.recipient
+    }
+
+    #[view]
+    /// Get the owner address
+    public fun get_owner(will_owner_addr: address): address acquires Will {
+        assert!(exists<Will>(will_owner_addr), error::not_found(E_WILL_NOT_INITIALIZED));
+        let will = borrow_global<Will>(will_owner_addr);
+        will.owner
     }
 }
