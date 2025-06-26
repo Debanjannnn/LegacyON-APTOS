@@ -47,14 +47,14 @@ export default function BentoGrid() {
       <div className="w-full max-w-[95vw] lg:max-w-[1800px] mx-auto relative z-10">
         <div className="grid grid-cols-12 grid-rows-6 gap-4 h-[800px] ">
           <motion.h1
-            className={cn("text-3xl md:text-4xl lg:text-5xl font-thin text-center mb-20 col-span-12 ", poppins.className)}
+            className={cn("text-3xl md:text-4xl lg:text-5xl font-thin text-center mb-32 col-span-12 ", poppins.className)}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
             <span className="text-5xl text-white/80 leading-tight">Why Choose Our Digital Will dApp?</span>
             <br />
-            <span className="text-xl md:text-2xl font-light text-white/70">
+            <span className="text-xl md:text-2xl font-light text-white/70 ">
               Fast, affordable, and secure digital wills—Built on Aptos.
             </span>
           </motion.h1>

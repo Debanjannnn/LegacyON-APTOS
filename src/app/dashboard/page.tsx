@@ -24,9 +24,11 @@ import { WalletSelector } from "@/components/WalletSelector"
 import { getAccountAPTBalance } from "@/view-functions/getAccountBalance"
 import DashboardWalletCard from "./_components/DashboardWalletCard"
 import DashboardTransactions, { DashboardTransaction } from "./_components/DashboardTransactions"
-import DashboardSidebar from "./_components/DashboardSidebar"
+import { SidebarDemo } from "./_components/Sidebar"
 import DashboardAssetDistribution from "./_components/DashboardAssetDistribution"
 import DashboardPriceChart from "./_components/DashboardPriceChart"
+import DashboardCreateWill from "./createwill/page"
+import CheckWillPage from "./checkwill/page"
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -58,6 +60,7 @@ export default function DashboardPage() {
   const [balanceLoading, setBalanceLoading] = useState(false)
   const [walletDropdownOpen, setWalletDropdownOpen] = useState(false)
   const walletDropdownRef = useRef<HTMLDivElement>(null)
+  const [activeSection, setActiveSection] = useState<string>("dashboard")
 
   const fetchAptosData = async () => {
     try {
@@ -207,45 +210,38 @@ export default function DashboardPage() {
   return (
     <div
       className={cn("min-h-screen bg-black p-0 m-0 relative", poppins.className)}
-      style={{
-        backgroundImage: "url('/images/gradient.png')",
-        backgroundPosition: "top center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% auto",
-      }}
     >
-      {/* Gradient overlay */}
-      <div
-        className="absolute left-0 right-0"
-        style={{
-          top: "30%",
-          bottom: 0,
-          pointerEvents: "none",
-          background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.85) 80%, #000 100%)",
-        }}
-      ></div>
+      {/* No gradient overlay, solid black background */}
 
-      <div className="w-full h-full rounded-none bg-black/50 backdrop-blur-sm shadow-xl flex flex-row p-8 gap-8 min-h-screen relative z-10">
-        <DashboardSidebar />
-        <main className="flex-1 grid grid-cols-3 gap-6">
-          <motion.section className="col-span-1 flex flex-col gap-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
-            <DashboardWalletCard aptosData={aptosData} />
-            <DashboardTransactions transactions={transactions as DashboardTransaction[]} />
-          </motion.section>
-          <motion.section className="col-span-2 flex flex-col gap-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
-            <DashboardAssetDistribution />
-            <DashboardPriceChart
-              aptosData={aptosData}
-              loading={loading}
-              lastUpdated={lastUpdated}
-              fetchAptosData={fetchAptosData}
-              generatePriceHistory={generatePriceHistory}
-              formatPrice={formatPrice}
-              formatPercentage={formatPercentage}
-            />
-          </motion.section>
-        </main>
+      <div className="w-screen h-screen flex flex-row">
+        <SidebarDemo onSectionChange={setActiveSection}>
+          {activeSection === "dashboard" && (
+            <main className="flex-1 grid grid-cols-3 gap-6">
+              <motion.section className="col-span-1 flex flex-col gap-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
+                <DashboardWalletCard aptosData={aptosData} />
+                <DashboardTransactions transactions={transactions as DashboardTransaction[]} />
+              </motion.section>
+              <motion.section className="col-span-2 flex flex-col gap-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
+                <DashboardAssetDistribution />
+                <DashboardPriceChart
+                  aptosData={aptosData}
+                  loading={loading}
+                  lastUpdated={lastUpdated}
+                  fetchAptosData={fetchAptosData}
+                  generatePriceHistory={generatePriceHistory}
+                  formatPrice={formatPrice}
+                  formatPercentage={formatPercentage}
+                />
+              </motion.section>
+            </main>
+          )}
+          {activeSection === "profile" && (
+            <DashboardCreateWill />
+          )}
+          {activeSection === "settings" && (
+            <CheckWillPage />
+          )}
+        </SidebarDemo>
       </div>
     </div>
   )

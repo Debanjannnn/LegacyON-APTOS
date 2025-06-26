@@ -53,8 +53,8 @@ export default function DashboardWalletCard({ aptosData }: { aptosData: any }) {
 
   return !connected ? (
     <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 text-center">
-      <div className="w-16 h-16 bg-gradient-to-br from-[#df500f]/20 to-[#ff6b35]/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/10">
-        <User className="w-8 h-8 text-[#df500f]" />
+      <div className="w-16 h-16 bg-gradient-to-br from-white/10 to-[#C0C0C0]/30 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/10">
+        <User className="w-8 h-8 text-[#C0C0C0]" />
       </div>
       <h3 className="text-white text-xl font-thin mb-3">Connect Your Wallet</h3>
       <p className="text-white/60 text-sm mb-6 leading-relaxed">
@@ -69,14 +69,14 @@ export default function DashboardWalletCard({ aptosData }: { aptosData: any }) {
       </div>
     </div>
   ) : (
-    <div className="bg-gradient-to-br from-[#df500f] to-[#ff6b35] rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
+    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 text-white shadow-lg relative overflow-hidden">
       <div className="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
       <div className="relative z-10">
         {/* Wallet Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-              <User className="w-5 h-5 text-white" />
+              <User className="w-5 h-5 text-[#C0C0C0]" />
             </div>
             <div>
               <div className="text-sm font-medium">Wallet Details</div>
@@ -103,7 +103,7 @@ export default function DashboardWalletCard({ aptosData }: { aptosData: any }) {
                   className="w-full text-left px-4 py-3 text-white/80 hover:bg-white/10 transition-colors flex items-center gap-3"
                   onClick={copyAddress}
                 >
-                  {copied ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                  {copied ? <CheckCircle className="w-4 h-4 text-[#C0C0C0]" /> : <Copy className="w-4 h-4 text-[#C0C0C0]" />}
                   <span className="text-sm">{copied ? "Copied!" : "Copy Address"}</span>
                 </button>
                 <div className="border-t border-white/10"></div>
@@ -157,7 +157,7 @@ export default function DashboardWalletCard({ aptosData }: { aptosData: any }) {
               onClick={copyAddress}
             >
               {copied ? (
-                <CheckCircle className="w-4 h-4 text-green-300" />
+                <CheckCircle className="w-4 h-4 text-[#C0C0C0]" />
               ) : (
                 <Copy className="w-4 h-4 text-white/60" />
               )}
@@ -167,16 +167,12 @@ export default function DashboardWalletCard({ aptosData }: { aptosData: any }) {
         {/* Status Indicators */}
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span>Aptos Blockchain • Active</span>
+            <div className="w-2 h-2 bg-[#C0C0C0] rounded-full animate-pulse"></div>
+            <span className="text-[#C0C0C0]">Aptos Blockchain • Active</span>
           </div>
           {aptosData && (
             <span
-              className={`px-2 py-1 rounded-full text-xs ${
-                aptosData.price_change_percentage_24h >= 0
-                  ? "bg-green-500/20 text-green-300"
-                  : "bg-red-500/20 text-red-300"
-              }`}
+              className={`px-2 py-1 rounded-full text-xs bg-white/10 text-[#C0C0C0]`}
             >
               {aptosData.price_change_percentage_24h >= 0 ? "+" : ""}
               {aptosData.price_change_percentage_24h.toFixed(2)}%

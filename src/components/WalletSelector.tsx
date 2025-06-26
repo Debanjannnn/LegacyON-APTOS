@@ -43,7 +43,7 @@ import {
 } from "lucide-react";
 import { useCallback, useState } from "react";
 
-export function WalletSelector() {
+export function WalletSelector({ className = "" }: { className?: string }) {
   const { account, connected, disconnect, wallet } = useWallet();
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -70,7 +70,7 @@ export function WalletSelector() {
   return connected ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button>
+        <Button className={className}>
           {account?.ansName || truncateAddress(account?.address.toStringLong()) || "Unknown"}
         </Button>
       </DropdownMenuTrigger>
@@ -98,7 +98,7 @@ export function WalletSelector() {
   ) : (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button>Connect a Wallet</Button>
+        <Button className={className}>Connect a Wallet</Button>
       </DialogTrigger>
       <ConnectWalletDialog close={closeDialog} />
     </Dialog>

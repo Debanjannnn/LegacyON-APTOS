@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Wallet, FileText, Shield, TrendingUp } from "lucide-react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 export default function DashboardSidebar() {
   const router = useRouter()
@@ -21,14 +22,22 @@ export default function DashboardSidebar() {
         </div>
       </div>
       {/* Navigation Icons */}
-      <motion.div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-2 hover:bg-white/20 transition-colors cursor-pointer group" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+      <motion.div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-2 hover:bg-white/20 transition-colors cursor-pointer group" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={() => router.push('/dashboard/wallet')}>
         <Wallet className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
       </motion.div>
-      <motion.div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-2 hover:bg-white/20 transition-colors cursor-pointer group" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+      <motion.div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-2 hover:bg-white/20 transition-colors cursor-pointer group" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={() => router.push('/dashboard/security')}>
         <Shield className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
       </motion.div>
-      <motion.div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-2 hover:bg-white/20 transition-colors cursor-pointer group" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+      <motion.div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-2 hover:bg-white/20 transition-colors cursor-pointer group" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={() => router.push('/dashboard/analytics')}>
         <TrendingUp className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+      </motion.div>
+      {/* New: Check Will */}
+      <motion.div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-2 hover:bg-white/20 transition-colors cursor-pointer group" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={() => router.push('/dashboard/checkwill')}>
+        <FileText className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+      </motion.div>
+      {/* New: Create Will */}
+      <motion.div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-2 hover:bg-white/20 transition-colors cursor-pointer group" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} onClick={() => router.push('/dashboard/createwill')}>
+        <ArrowLeft className="w-5 h-5 text-white/70 group-hover:text-white transition-colors rotate-180" />
       </motion.div>
       <div className="flex-1" />
       {/* Back Button */}

@@ -42,7 +42,7 @@ export default function DashboardPriceChart({ aptosData, loading, lastUpdated, f
       </div>
       {loading ? (
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#df500f]"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white"></div>
         </div>
       ) : (
         <>
@@ -79,7 +79,7 @@ export default function DashboardPriceChart({ aptosData, loading, lastUpdated, f
             {generatePriceHistory().map((height, index) => (
               <motion.div
                 key={index}
-                className="flex-1 bg-gradient-to-t from-[#df500f] to-[#ff6b35] rounded-sm hover:opacity-80 transition-opacity cursor-pointer"
+                className="flex-1 bg-[#5B8930] rounded-sm hover:opacity-80 transition-opacity cursor-pointer"
                 style={{ height: `${height}%` }}
                 initial={{ height: 0 }}
                 animate={{ height: `${height}%` }}
