@@ -4,50 +4,39 @@ import Image from "next/image"
 const companies = [
   {
     name: "Aptos",
-    url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066341/Google_fav2wl.svg",
+    url: "/images/Aptos_Primary_WHT.png",
   },
   {
-    name: "GitHub",
-    url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066341/GitHub_honend.svg",
+    name: "RiseIn",
+    url: "/images/Pi7_risein-logo3.png",
   },
   {
-    name: "Amazon",
-    url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066178/Amazon_wckqtv.svg",
-  },
-  {
-    name: "Netflix",
-    url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066179/Netflix_skrjyn.svg",
-  },
-  {
-    name: "YouTube",
-    url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066180/YouTube_wknngk.svg",
-  },
-  {
-    name: "Instagram",
-    url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066178/Instagram_mo5ttl.svg",
-  },
-  {
-    name: "Spotify",
-    url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066180/Spotify_ocrrnm.svg",
-  },
+    name: "HackQuest",
+    url: "/images/White_on_Transparent.png",
+  }
 ]
 
 export function Logos() {
   return (
     <section id="logos">
       <div className="container mx-auto px-4 py-12 md:px-8">
-        <h3 className="text-center text-sm font-semibold text-white/70">TRUSTED BY LEADING TEAMS</h3>
+        <h3 className="text-center text-sm font-semibold text-white/70">TRUSTED BY LEADING COMMUNITIES</h3>
         <div className="relative mt-6">
           <Marquee className="max-w-full [--duration:40s]">
             {companies.map((company, idx) => (
-              <Image
+              <div
                 key={idx}
-                width={112}
-                height={40}
-                src={company.url || "/placeholder.svg"}
-                className="h-10 w-28 opacity-30 grayscale dark:brightness-0 dark:invert"
-                alt={company.name}
-              />
+                className="flex items-center justify-center mx-6 min-w-[112px] min-h-[40px] h-12 w-32"
+                style={{ aspectRatio: 'auto 112 / 40' }}
+              >
+                <Image
+                  width={112}
+                  height={40}
+                  src={company.url || "/placeholder.svg"}
+                  className="object-contain max-h-10 max-w-[112px] opacity-30 grayscale dark:brightness-0 dark:invert"
+                  alt={company.name}
+                />
+              </div>
             ))}
           </Marquee>
         </div>

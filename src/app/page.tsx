@@ -84,7 +84,7 @@ export default function Home() {
       <FAQSection />
       <SmoothCursor />
       {/* Optional dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/20 pointer-events-none -z-10"></div>
+      {/* <div className="absolute inset-0 bg-black/20 pointer-events-none -z-10"></div> */}
 
     </div>
     </div>

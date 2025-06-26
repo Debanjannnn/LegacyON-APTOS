@@ -1,10 +1,11 @@
-import { SVGProps } from "react";
+import { SVGProps, ReactNode } from "react";
 
 export interface Iphone15ProProps extends SVGProps<SVGSVGElement> {
   width?: number;
   height?: number;
   src?: string;
   videoSrc?: string;
+  children?: ReactNode;
 }
 
 export default function Iphone15Pro({
@@ -12,6 +13,7 @@ export default function Iphone15Pro({
   height = 882,
   src,
   videoSrc,
+  children,
   ...props
 }: Iphone15ProProps) {
   return (
@@ -57,7 +59,13 @@ export default function Iphone15Pro({
         className="fill-[#E5E5E5] stroke-[#E5E5E5] stroke-[0.5] dark:fill-[#404040] dark:stroke-[#404040]"
       />
 
-      {src && (
+      {children ? (
+        <foreignObject x="21.25" y="19.25" width="389.5" height="843.5" clipPath="url(#roundedCorners)">
+          <div style={{ width: "100%", height: "100%", borderRadius: 55.75, overflow: "hidden" }}>
+            {children}
+          </div>
+        </foreignObject>
+      ) : src ? (
         <image
           href={src}
           x="21.25"
@@ -67,8 +75,7 @@ export default function Iphone15Pro({
           preserveAspectRatio="xMidYMid slice"
           clipPath="url(#roundedCorners)"
         />
-      )}
-      {videoSrc && (
+      ) : videoSrc ? (
         <foreignObject x="21.25" y="19.25" width="389.5" height="843.5">
           <video
             className="size-full overflow-hidden rounded-[55.75px] object-cover"
@@ -79,7 +86,7 @@ export default function Iphone15Pro({
             playsInline
           />
         </foreignObject>
-      )}
+      ) : null}
       <path
         d="M154 48.5C154 38.2827 162.283 30 172.5 30H259.5C269.717 30 278 38.2827 278 48.5C278 58.7173 269.717 67 259.5 67H172.5C162.283 67 154 58.7173 154 48.5Z"
         className="fill-[#F5F5F5] dark:fill-[#262626]"
