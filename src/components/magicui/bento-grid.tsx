@@ -4,7 +4,7 @@ import { ChevronRight, Clock, Code, Leaf, Database, FileText } from "lucide-reac
 import { motion, type Variants } from "framer-motion"
 import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
-import { AuroraText } from "@/components/magicui/aurora-text"
+// import { AuroraText } from "@/components/magicui/aurora-text"
 import Link from "next/link"
 import AnimatedListDemo from "@/components/Notification"
 // import { Notification } from "@/components/Notification"

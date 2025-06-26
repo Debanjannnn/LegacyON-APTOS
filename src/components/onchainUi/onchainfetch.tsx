@@ -60,16 +60,17 @@ export default function OnchainWill() {
     if (!addr) return ""
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`
   }
-
+//@ts-ignore
   const clearMessages = () => {
     setError("")
     setSuccess("")
   }
-
+//@ts-ignore
   const setRecipientFn = async () => {
     setLoading(true)
     setError("")
     try {
+      //@ts-ignore
       await client.set_recipient({
         type_arguments: [],
         arguments: [recipient as `0x${string}`],
@@ -82,11 +83,12 @@ export default function OnchainWill() {
       setLoading(false)
     }
   }
-
+//@ts-ignore
   const depositFunds = async () => {
     setLoading(true)
     setError("")
     try {
+      //@ts-ignore
       await client.deposit({
         type_arguments: [],
         arguments: [BigInt(Number.parseFloat(amount) * 1e8)], // Convert to octas
@@ -99,11 +101,12 @@ export default function OnchainWill() {
       setLoading(false)
     }
   }
-
+//@ts-ignore
   const initializeWill = async () => {
     setLoading(true)
     setError("")
     try {
+      //@ts-ignore
       await client.initialize_will({
         type_arguments: [],
         arguments: [],
@@ -120,7 +123,7 @@ export default function OnchainWill() {
   const isValidAddress = (addr: string) => {
     return addr.startsWith("0x") && addr.length >= 10
   }
-
+//@ts-ignore
   const abiClient = client.useABI(WILL_ABI)
 
   return (

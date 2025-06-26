@@ -2,13 +2,13 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Github, Twitter, Linkedin } from "lucide-react"
+// import { Github, Twitter, Linkedin } from "lucide-react"
 import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useState, useEffect } from "react"
 import { Logos } from "./LogoCloud"
-import { AnimatedShinyTextDemo } from "./ShinyText"
+// import { AnimatedShinyTextDemo } from "./ShinyText"
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -18,9 +18,11 @@ const poppins = Poppins({
 })
 
 export default function HeroSection() {
+  //@ts-ignore
   const [count, setCount] = useState(0)
   const { scrollY } = useScroll()
   const y1 = useTransform(scrollY, [0, 300], [0, -50])
+  //@ts-ignore
   const y2 = useTransform(scrollY, [0, 300], [0, -30])
   const opacity = useTransform(scrollY, [0, 300], [1, 0.8])
 

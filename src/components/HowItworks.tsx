@@ -4,7 +4,7 @@ import { FileText, Shield, Edit } from "lucide-react"
 import { motion, type Variants } from "framer-motion"
 import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
-import { AuroraText } from "@/components/magicui/aurora-text"
+// import { AuroraText } from "@/components/magicui/aurora-text"
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
