@@ -1,12 +1,11 @@
 "use client"
 
-import { ArrowRight, ChevronRight, Clock, Code, Leaf, Database, FileText } from "lucide-react"
+import { ChevronRight, Clock, Code, Leaf, Database, FileText } from "lucide-react"
 import { motion, type Variants } from "framer-motion"
 import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { AuroraText } from "@/components/magicui/aurora-text"
 import Link from "next/link"
-import Iphone15Pro from "@/components/magicui/iphone-15-pro"
 import AnimatedListDemo from "@/components/Notification"
 // import { Notification } from "@/components/Notification"
 
@@ -63,7 +62,7 @@ export default function BentoGrid() {
           </motion.h1>
 
           {/* Fast Transactions - Top Left (Large) */}
-          <Link href="/fast-transactions" className="col-span-12 md:col-span-4 row-span-3 group cursor-pointer">
+          <Link href="/" className="col-span-12 md:col-span-4 row-span-3 group cursor-pointer">
             <motion.div
               className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 text-white relative overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 shadow-2xl"
               variants={cardVariants}
@@ -94,26 +93,13 @@ export default function BentoGrid() {
                     Our dApp leverages Aptos's parallel execution for ultra-fast, reliable will fulfillment—so your loved ones never wait.
                   </p>
                 </div>
-                <div className="flex justify-center my-4">
-                  <Iphone15Pro
-                    width={120}
-                    height={245}
-                    src="/aptos.png"
-                    className="shadow-lg rounded-3xl border border-white/10 bg-white/10"
-                  />
-                </div>
-                <div className="flex justify-end">
-                  <ArrowRight
-                    className="text-white w-6 h-6 group-hover:translate-x-1 transition-transform"
-                    strokeWidth={2}
-                  />
-                </div>
+                
               </div>
             </motion.div>
           </Link>
 
           {/* Low-Cost Operations - Top Center */}
-          <Link href="/low-cost" className="col-span-12 md:col-span-4 row-span-3 group cursor-pointer">
+          <Link href="/" className="col-span-12 md:col-span-4 row-span-3 group cursor-pointer">
             <motion.div
               className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 relative overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 shadow-xl"
               variants={cardVariants}
@@ -145,18 +131,13 @@ export default function BentoGrid() {
                     <div className="text-white font-bold text-sm">No hidden costs</div>
                   </div>
                 </div>
-                <div className="flex justify-end mt-auto">
-                  <ChevronRight
-                    className="text-[#df500f] w-6 h-6 group-hover:translate-x-1 transition-transform"
-                    strokeWidth={2}
-                  />
-                </div>
+                
               </div>
             </motion.div>
           </Link>
 
           {/* EVM Compatibility - Top Right */}
-          <Link href="/evm-compatibility" className="col-span-12 md:col-span-4 row-span-2 group cursor-pointer">
+          <Link href="/" className="col-span-12 md:col-span-4 row-span-2 group cursor-pointer">
             <motion.div
               className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 relative overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 shadow-xl"
               variants={cardVariants}
@@ -192,14 +173,14 @@ export default function BentoGrid() {
                     <p className="text-white font-bold">Aptos = Peace of Mind</p>
                     <p className="text-green-400 text-xs">Best for digital legacy</p>
                   </div>
-                  <ChevronRight className="text-[#df500f] w-5 h-5" strokeWidth={2} />
+                  
                 </div>
               </div>
             </motion.div>
           </Link>
 
           {/* Data Transparency - Middle Right */}
-          <Link href="/data-transparency" className="col-span-12 md:col-span-4 row-span-1 group cursor-pointer">
+          <Link href="/" className="col-span-12 md:col-span-4 row-span-1 group cursor-pointer">
             <motion.div
               className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-4 relative overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 shadow-xl"
               variants={cardVariants}
@@ -221,7 +202,7 @@ export default function BentoGrid() {
           </Link>
 
           {/* Will Creation - Bottom Left */}
-          <Link href="/create-will" className="col-span-12 md:col-span-3 row-span-3 group cursor-pointer">
+          <Link href="/" className="col-span-12 md:col-span-3 row-span-3 group cursor-pointer">
             <motion.div
               className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 relative overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 shadow-xl"
               variants={cardVariants}
@@ -265,7 +246,7 @@ export default function BentoGrid() {
           </Link>
 
           {/* Eco-Friendly Features - Bottom Center */}
-          <Link href="/eco-friendly" className="col-span-12 md:col-span-5 row-span-3 group cursor-pointer">
+          <Link href="/" className="col-span-12 md:col-span-5 row-span-3 group cursor-pointer">
             <motion.div
               className="h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 relative overflow-hidden hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 shadow-xl"
               variants={cardVariants}
