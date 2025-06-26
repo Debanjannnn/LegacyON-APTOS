@@ -52,11 +52,9 @@ export default function BentoGrid() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <AuroraText colors={["#df500f", "#ff6b35", "#ffffff", "#c4460d"]}>
-              <span className="text-transparent">Why Choose Our Digital Will dApp?</span>
-            </AuroraText>
+            <span className="text-5xl text-white/80 leading-tight">Why Choose Our Digital Will dApp?</span>
             <br />
-            <span className="text-xl md:text-2xl font-light text-white/80">
+            <span className="text-xl md:text-2xl font-light text-white/70">
               Fast, affordable, and secure digital wills—Built on Aptos.
             </span>
           </motion.h1>

@@ -118,10 +118,10 @@ export default function HowItWorks() {
       <svg width="0" height="0" className="absolute">
         <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="white" />
-          <stop offset="100%" stopColor="#df500f" />
+          <stop offset="100%" stopColor="#C0C0C0" />
         </linearGradient>
         <linearGradient id="step-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#df500f" />
+          <stop offset="0%" stopColor="#C0C0C0" />
           <stop offset="100%" stopColor="white" />
         </linearGradient>
       </svg>
@@ -140,9 +140,9 @@ export default function HowItWorks() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <AuroraText colors={["#df500f", "#ff6b35", "#ffffff", "#c4460d"]}>
-              <span className="text-transparent bg-clip-text">How It Works</span>
-            </AuroraText>
+
+            <span className="text-5xl text-white/80 leading-tight">How It Works</span>
+
           </motion.h1>
           <motion.p
             className="text-white/70 text-2xl font-light"
@@ -161,14 +161,14 @@ export default function HowItWorks() {
             return (
               <motion.div
                 key={index}
-                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col relative group overflow-hidden shadow-xl hover:shadow-[0_0_30px_rgba(223,80,15,0.2)] h-full"
+                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col relative group overflow-hidden shadow-xl hover:shadow-[0_0_30px_rgba(192,192,192,0.2)] h-full"
                 initial="initial"
                 animate="animate"
                 whileHover="hover"
                 variants={cardVariants}
                 custom={index}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-[#df500f]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-[#C0C0C0]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
 
                 {/* Step indicator */}
                 <div className="flex items-center justify-between mb-6">
@@ -176,13 +176,13 @@ export default function HowItWorks() {
                     className="w-16 h-16 bg-black/30 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/10 relative overflow-hidden"
                     variants={iconVariants}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-[#df500f]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-[#C0C0C0]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <IconComponent
-                      className="w-8 h-8 text-[#df500f] group-hover:text-white transition-colors duration-300"
+                      className="w-8 h-8 text-[#C0C0C0] group-hover:text-white transition-colors duration-300"
                       strokeWidth={1.5}
                     />
                   </motion.div>
-                  <span className="text-sm bg-gradient-to-r from-[#df500f] to-white bg-clip-text text-transparent font-medium">
+                  <span className="text-sm bg-gradient-to-r from-[#C0C0C0] to-white bg-clip-text text-transparent font-medium">
                     {step.step}
                   </span>
                 </div>
@@ -190,7 +190,7 @@ export default function HowItWorks() {
                 {/* Content */}
                 <h3
                   className={cn(
-                    "text-2xl font-thin mb-4 text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-t group-hover:from-white group-hover:to-[#df500f] transition-colors duration-300",
+                    "text-2xl font-thin mb-4 text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-t group-hover:from-white group-hover:to-[#C0C0C0] transition-colors duration-300",
                     poppins.className,
                   )}
                 >
@@ -208,7 +208,7 @@ export default function HowItWorks() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + featureIndex * 0.1, duration: 0.5 }}
                     >
-                      <div className="w-1.5 h-1.5 bg-[#df500f]/70 rounded-full mr-3 flex-shrink-0"></div>
+                      <div className="w-1.5 h-1.5 bg-[#C0C0C0]/70 rounded-full mr-3 flex-shrink-0"></div>
                       <span className="font-light">{feature}</span>
                     </motion.li>
                   ))}
@@ -222,7 +222,7 @@ export default function HowItWorks() {
                     whileHover={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="w-12 h-0.5 bg-gradient-to-r from-[#df500f] to-transparent rounded-full"></div>
+                    <div className="w-12 h-0.5 bg-gradient-to-r from-[#C0C0C0] to-transparent rounded-full"></div>
                   </motion.div>
                 </div>
               </motion.div>
@@ -232,7 +232,7 @@ export default function HowItWorks() {
 
         {/* Connection lines between steps (visible on lg and larger screens) */}
         <div className="hidden lg:block absolute top-1/2 left-0 w-full z-0 pointer-events-none">
-          <div className="relative h-0.5 bg-gradient-to-r from-transparent via-[#df500f]/30 to-transparent w-[70%] mx-auto"></div>
+          <div className="relative h-0.5 bg-gradient-to-r from-transparent via-[#C0C0C0]/30 to-transparent w-[70%] mx-auto"></div>
         </div>
       </div>
     </div>

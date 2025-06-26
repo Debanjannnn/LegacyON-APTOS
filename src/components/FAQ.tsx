@@ -88,11 +88,11 @@ const FAQSection = () => {
                 )}
                 variants={itemVariants}
               >
-                <AuroraText colors={["#df500f", "#ff6b35", "#ffffff", "#c4460d"]}>
-                  <span className="text-transparent">Have questions in mind?</span>
-                </AuroraText>
+                
+                <span className="text-5xl text-white/80 leading-tight">Have questions in mind?</span>
+                
               </motion.h2>
-              <motion.p className="text-2xl font-light text-white/80" variants={itemVariants}>
+              <motion.p className="text-2xl font-light text-white/70" variants={itemVariants}>
                 Let us answer it
               </motion.p>
             </div>
