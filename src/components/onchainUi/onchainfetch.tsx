@@ -7,6 +7,7 @@ import { WILL_ABI } from "@/utils/will_abi"
 import { motion } from "framer-motion"
 import { Poppins } from "next/font/google"
 import { cn } from "@/lib/utils"
+ // @ts-ignore
 import { FileText, Wallet, RefreshCw, Shield, Gift, AlertCircle, CheckCircle, Loader2, Activity, Users, UserCheck, UserPlus, ListOrdered, ClipboardCopy, Globe2 } from "lucide-react"
 import { WalletSelector } from "@/components/WalletSelector"
 import { surfClient } from "@/utils/surfClient"
@@ -29,18 +30,25 @@ export default function WillManager() {
   const [status, setStatus] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+   // @ts-ignore
   const [copied, setCopied] = useState(false)
+   // @ts-ignore
   const [will, setWill] = useState<any>(null)
-  const [willsForRecipient, setWillsForRecipient] = useState<any[]>([])
+   // @ts-ignore
+  const [willsForRecipient, setWillsForRecipient] = useState<any[]>([]) // @ts-ignore
   const [claimableWills, setClaimableWills] = useState<any[]>([])
+   // @ts-ignore
   const [willCount, setWillCount] = useState<number | null>(null)
+   // @ts-ignore
   const abiClient = client?.useABI(WILL_ABI)
   const ownerAddress = account?.address?.toStringLong() || ""
 
-  // Utility
+  // Utility 
+ // @ts-ignore
   const copyAddress = async (address: string) => {
     await navigator.clipboard.writeText(address)
     setCopied(true)
+     // @ts-ignore
     setTimeout(() => setCopied(false), 2000)
   }
   const truncateAddress = (addr: string) => {
@@ -62,23 +70,26 @@ export default function WillManager() {
     setLoading(true)
     setError(null)
     try {
+      // @ts-ignore
       const result = await surfClient().useABI(WILL_ABI).view.get_will({
         functionArguments: [ownerAddress as `0x${string}`],
         typeArguments: [],
       })
-      setWill(result[0]?.some ? result[0].some : null)
+      setWill(result[0]?.vec || [])
     } catch (e: any) {
-      setWill(null)
+      setWill([])
       setError("No will found or error fetching will.")
     } finally {
       setLoading(false)
     }
   }
+  // @ts-ignore
   const fetchWillsForRecipient = async () => {
     if (!owner || !recipient) return setError("Owner and recipient required.")
     setLoading(true)
     setError(null)
     try {
+       // @ts-ignore
       const result = await surfClient().useABI(WILL_ABI).view.get_wills_for_recipient({
         functionArguments: [owner as `0x${string}`, recipient as `0x${string}`],
         typeArguments: [],
@@ -91,11 +102,13 @@ export default function WillManager() {
       setLoading(false)
     }
   }
+  // @ts-ignore
   const fetchClaimableWills = async () => {
     if (!owner || !recipient) return setError("Owner and recipient required.")
     setLoading(true)
     setError(null)
     try {
+      // @ts-ignore
       const result = await surfClient().useABI(WILL_ABI).view.get_claimable_wills_for_recipient({
         functionArguments: [owner as `0x${string}`, recipient as `0x${string}`],
         typeArguments: [],
@@ -108,11 +121,13 @@ export default function WillManager() {
       setLoading(false)
     }
   }
+  // @ts-ignore
   const fetchWillCount = async () => {
     if (!owner || !recipient) return setError("Owner and recipient required.")
     setLoading(true)
     setError(null)
     try {
+       // @ts-ignore
       const result = await surfClient().useABI(WILL_ABI).view.get_will_count_for_recipient({
         functionArguments: [owner as `0x${string}`, recipient as `0x${string}`],
         typeArguments: [],
@@ -133,6 +148,7 @@ export default function WillManager() {
     setError(null)
     setStatus(null)
     try {
+       // @ts-ignore
       await abiClient.initialize({ type_arguments: [], arguments: [] })
       setStatus("Will contract initialized!")
       fetchWill()
@@ -148,6 +164,7 @@ export default function WillManager() {
     setError(null)
     setStatus(null)
     try {
+       // @ts-ignore
       await abiClient.initialize_global_registry({ type_arguments: [], arguments: [] })
       setStatus("Global registry initialized!")
     } catch (e: any) {
@@ -163,6 +180,7 @@ export default function WillManager() {
     setError(null)
     setStatus(null)
     try {
+       // @ts-ignore
       await abiClient.create_will({
         type_arguments: [],
         arguments: [recipient as `0x${string}`, BigInt(amount), ownerAddress as `0x${string}`],
@@ -181,6 +199,7 @@ export default function WillManager() {
     setError(null)
     setStatus(null)
     try {
+       // @ts-ignore
       await abiClient.ping({ type_arguments: [], arguments: [] })
       setStatus("Pinged successfully!")
       fetchWill()
@@ -197,6 +216,7 @@ export default function WillManager() {
     setError(null)
     setStatus(null)
     try {
+       // @ts-ignore
       await abiClient.claim({ type_arguments: [], arguments: [owner as `0x${string}`, BigInt(amount)] })
       setStatus("Claimed successfully!")
       fetchWill()
@@ -213,6 +233,7 @@ export default function WillManager() {
     setError(null)
     setStatus(null)
     try {
+      // @ts-ignore
       await abiClient.claim_single({ type_arguments: [], arguments: [owner as `0x${string}`] })
       setStatus("Claimed single will successfully!")
       fetchWill()
@@ -251,9 +272,6 @@ export default function WillManager() {
               {/* Tabs */}
               <div className="flex gap-2 mb-4">
                 <button className={`px-4 py-2 rounded-lg ${tab === "yourWill" ? "bg-[#df500f] text-white" : "bg-white/10 text-white/60"}`} onClick={() => setTab("yourWill")}>Your Will</button>
-                <button className={`px-4 py-2 rounded-lg ${tab === "willsForRecipient" ? "bg-[#df500f] text-white" : "bg-white/10 text-white/60"}`} onClick={() => setTab("willsForRecipient")}>Wills for Recipient</button>
-                <button className={`px-4 py-2 rounded-lg ${tab === "claimableWills" ? "bg-[#df500f] text-white" : "bg-white/10 text-white/60"}`} onClick={() => setTab("claimableWills")}>Claimable Wills</button>
-                <button className={`px-4 py-2 rounded-lg ${tab === "willCount" ? "bg-[#df500f] text-white" : "bg-white/10 text-white/60"}`} onClick={() => setTab("willCount")}>Will Count</button>
               </div>
               {/* Tab Content */}
               {tab === "yourWill" && (
@@ -267,84 +285,39 @@ export default function WillManager() {
                       <FileText className="w-5 h-5 text-[#df500f]" />
                       <h4 className="text-white font-medium">Your Will:</h4>
                     </div>
-                    {will ? (
-                      <div className="bg-black/30 p-4 rounded-xl border border-white/10">
-                        <pre className="text-xs text-white/70 overflow-x-auto whitespace-pre-wrap">{JSON.stringify(will, null, 2)}</pre>
-                      </div>
+                    {will && will.length > 0 ? (
+                      will.map((w: any, idx: number) => (
+                        <div key={idx} className="bg-black/30 p-4 rounded-xl border border-white/10 mb-2">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <div>
+                              <span className="text-white/60 text-xs">Amount:</span>
+                              <div className="text-white font-mono">{formatAmount(w.amount)} APT</div>
+                            </div>
+                            <div>
+                              <span className="text-white/60 text-xs">Timeout:</span>
+                              <div className="text-white font-mono">{w.timeout_secs} sec</div>
+                            </div>
+                            <div>
+                              <span className="text-white/60 text-xs">Owner:</span>
+                              <div className="text-white font-mono">{truncateAddress(w.owner)}</div>
+                            </div>
+                            <div>
+                              <span className="text-white/60 text-xs">Recipient:</span>
+                              <div className="text-white font-mono">{truncateAddress(w.recipient)}</div>
+                            </div>
+                            <div className="md:col-span-2">
+                              <span className="text-white/60 text-xs">Last Ping:</span>
+                              <div className="text-white font-mono">{formatTimestamp(w.last_ping_time)}</div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
                     ) : (
                       <div className="text-center py-8">
                         <FileText className="w-12 h-12 text-white/20 mx-auto mb-3" />
                         <p className="text-white/60">No will found.</p>
                       </div>
                     )}
-                  </div>
-                </div>
-              )}
-              {tab === "willsForRecipient" && (
-                <div className="space-y-4">
-                  <div className="flex gap-2">
-                    <input type="text" placeholder="Owner address" value={owner} onChange={e => setOwner(e.target.value)} className="w-full p-2 rounded bg-white/10 text-white" />
-                    <input type="text" placeholder="Recipient address" value={recipient} onChange={e => setRecipient(e.target.value)} className="w-full p-2 rounded bg-white/10 text-white" />
-                    <button onClick={fetchWillsForRecipient} className="px-4 py-2 bg-[#df500f] text-white rounded-lg">Fetch</button>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <Users className="w-5 h-5 text-[#df500f]" />
-                      <h4 className="text-white font-medium">Wills for Recipient:</h4>
-                    </div>
-                    {willsForRecipient.length > 0 ? (
-                      <div className="space-y-2 max-h-48 overflow-y-auto">
-                        {willsForRecipient.map((w, i) => (
-                          <div key={i} className="bg-black/30 p-2 rounded border border-white/10 text-xs text-white/70">
-                            {JSON.stringify(w, null, 2)}
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-center py-4 text-white/60">No wills found.</div>
-                    )}
-                  </div>
-                </div>
-              )}
-              {tab === "claimableWills" && (
-                <div className="space-y-4">
-                  <div className="flex gap-2">
-                    <input type="text" placeholder="Owner address" value={owner} onChange={e => setOwner(e.target.value)} className="w-full p-2 rounded bg-white/10 text-white" />
-                    <input type="text" placeholder="Recipient address" value={recipient} onChange={e => setRecipient(e.target.value)} className="w-full p-2 rounded bg-white/10 text-white" />
-                    <button onClick={fetchClaimableWills} className="px-4 py-2 bg-[#df500f] text-white rounded-lg">Fetch</button>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <UserCheck className="w-5 h-5 text-[#df500f]" />
-                      <h4 className="text-white font-medium">Claimable Wills:</h4>
-                    </div>
-                    {claimableWills.length > 0 ? (
-                      <div className="space-y-2 max-h-48 overflow-y-auto">
-                        {claimableWills.map((w, i) => (
-                          <div key={i} className="bg-black/30 p-2 rounded border border-white/10 text-xs text-white/70">
-                            {JSON.stringify(w, null, 2)}
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-center py-4 text-white/60">No claimable wills found.</div>
-                    )}
-                  </div>
-                </div>
-              )}
-              {tab === "willCount" && (
-                <div className="space-y-4">
-                  <div className="flex gap-2">
-                    <input type="text" placeholder="Owner address" value={owner} onChange={e => setOwner(e.target.value)} className="w-full p-2 rounded bg-white/10 text-white" />
-                    <input type="text" placeholder="Recipient address" value={recipient} onChange={e => setRecipient(e.target.value)} className="w-full p-2 rounded bg-white/10 text-white" />
-                    <button onClick={fetchWillCount} className="px-4 py-2 bg-[#df500f] text-white rounded-lg">Fetch</button>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <ListOrdered className="w-5 h-5 text-[#df500f]" />
-                      <h4 className="text-white font-medium">Will Count:</h4>
-                    </div>
-                    <div className="text-2xl text-white font-bold">{willCount !== null ? willCount : "-"}</div>
                   </div>
                 </div>
               )}
