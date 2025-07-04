@@ -1,13 +1,12 @@
 [package]
-name = "contract"
+name = "will_contract"
 version = "1.0.0"
 authors = []
 
 [addresses]
-contract = "0xca3c5fd65c433ab2a6c4398dc6b9a70ba99723074f5a248262635ec5bcb8fe73"
-
+will_contract_addr = "0x937faeae1a19e86a0b35bf99ce606e02b9d223a37fb1189e33bee708324345e9"
 
 [dependencies]
-AptosFramework = { git = "https://github.com/aptos-labs/aptos-framework.git", rev = "devnet", subdir = "aptos-framework" }
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-framework.git", rev = "mainnet", subdir = "aptos-framework" }
 
 [dev-dependencies]
