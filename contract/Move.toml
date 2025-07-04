@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = []
 
 [addresses]
-will_contract_addr = "0x937faeae1a19e86a0b35bf99ce606e02b9d223a37fb1189e33bee708324345e9"
+will_contract_addr = "0x99db5a47d1ad6cdf0a9a24a58d7cfe0bc8ebaf7c059d849e6727c490846aa440"
 
 [dependencies]
 AptosFramework = { git = "https://github.com/aptos-labs/aptos-framework.git", rev = "mainnet", subdir = "aptos-framework" }
